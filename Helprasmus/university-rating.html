@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover - Isma</title>
+    <style>
+       body {
+            background-color: #87CEEB;
+            font-family: "San Francisco", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #87CEEB;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+        }
+
+        nav {
+            background-color: #333;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+        }
+
+        .university-carousel-container {
+            display: flex;
+            overflow: hidden;
+            justify-content: center;
+            position: relative;
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .university-card {
+            flex: 0 0 400px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-right: 20px;
+            background-color: #ffffff;
+            display: none;
+        }
+        .university-card img {
+            max-width: 100%; /* o una percentuale/minore specifica */
+            max-height: 150px; /* o un'altezza specifica */
+            height: auto; /* mantiene le proporzioni */
+            padding-left: 20px;
+        }
+
+
+        .arrow {
+            cursor: pointer;
+            font-size: 24px;
+            user-select: none;
+            z-index: 2;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .arrow.left {
+            left: 10px;
+        }
+
+        .arrow.right {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Informazioni Università</h1>
+    </header>
+
+    <nav>
+        <a href="Homepage.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="university-info.html">University Info</a>
+        <a href="Documentation-help.html">Documentation Help</a>
+    </nav>
+
+    <div class="university-carousel-container">
+
+        <div class="university-card">
+            <h2>Isma University, Riga</h2>
+            <p>This private university placed in Riga, Latvia is very popular among international students, due to the several english courses you can attend.</p>
+            <a href="https://isma.lv/en/">website</a>
+            <img src="isma.jpg" alt="ISMA image">
+        </div>
+
+        <div class="university-card" style="display: none;">
+            <h2>Università Parthenope</h2>
+            <p>This university has several branches in Naples, Italy. Excellence of Oceangraphy and navigation system, today Parthenope university provides many faculties to choose among for its students.</p>
+            <a href="https://www.uniparthenope.it">website</a>
+            <img src="parthenope.jpg" alt="Parthenope image">
+        </div>
+
+        <div class="university-card" style="display: none;">
+            <h2>IEU, Izmir</h2>
+            <p>IEU is one of the biggest private universities in Izmir, Turkyie. The university provides lots of courses in english due to the mandatory high level english preparation for its students and professors. Here you will be able to attend very specific and interesting courses, you can't find anywhere else</p>
+            <a href="https://www.ieu.edu.tr/en">website</a>
+            <img src="ieu.jpg" alt="IEU image">
+        </div>
+
+        <div class="arrow left">&#10094;</div>
+        <div class="arrow right">&#10095;</div>
+
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        const cards = document.querySelectorAll('.university-card');
+    
+        document.querySelector('.arrow.left').addEventListener('click', function() {
+            scroll(-1);
+        });
+    
+        document.querySelector('.arrow.right').addEventListener('click', function() {
+            scroll(1);
+        });
+    
+        function scroll(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) {
+                currentIndex = cards.length - 1;
+            } else if (currentIndex >= cards.length) {
+                currentIndex = 0;
+            }
+            updateCardsVisibility();
+        }
+    
+        function updateCardsVisibility() {
+            cards.forEach((card, index) => {
+                card.style.display = index === currentIndex ? 'block' : 'none';
+            });
+        }
+    
+        updateCardsVisibility(); // Inizializzazione iniziale
+    </script>
+    
+</body>
+</html>

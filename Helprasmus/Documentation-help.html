@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- Title of the page -->
+    <title>Documentation Help - Helprasmus</title>
+    <style>
+        body {
+            background-color: #A5D9FD; 
+            font-family: "San Francisco", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #A5D9FD; 
+            color: #333; 
+            text-align: center;
+            padding: 20px;
+        }
+
+        nav {
+            background-color: #216EB6; 
+            text-align: start;
+            padding: 2px; 
+            height: 40px; 
+        }
+
+        nav a {
+            color: black; 
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        section {
+            padding: 20px;
+            text-align: left;
+        }
+
+        .home-button {
+            display: inline-block;
+            padding: 5px; 
+            vertical-align: middle;
+            margin-top: -20px;
+        }
+       
+
+        h2 {
+          /* Styling for the heading 2 element, setting position, top, left, transformation, and margin */
+    position: absolute; 
+    top: 30%;
+    left: 40%; 
+    transform: translate(-50%, -50%);
+    margin: 0; 
+}
+
+        .accordion {
+             /* Styling for the accordion button, setting cursor, text alignment, border, outline, transition, font size, background color, width, text alignment, margin, padding, display, justify-content, align-items, and border-bottom */
+            cursor: pointer;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.4s;
+            font-size: 18px;
+            background-color: transparent;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 10px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .panel {
+            /* Styling for the panel, setting display, padding, font size, and background color */
+            display: none;
+            padding: 10px;
+            font-size: 16px;
+            background-color: transparent;
+            width: 100%;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .rotate {
+             /* Styling for the rotation arrow, setting transition, margin-left */
+            transition: transform 0.4s;
+            margin-left: 10px;
+        }
+
+        .rotate.expanded {
+             /* Styling for the expanded rotation arrow, setting transform to rotate 90 degrees */
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body>
+
+   
+<!-- Navigation bar -->
+    <nav>
+       
+        <a href="about-us.html">About Us</a>
+      
+        <a href="university-rating .html">Discover</a>
+         <!-- Home button image for the homepage -->
+        <a href="index.html" class="home-button">
+            <img src="bottone_home_page-0001.png" alt="Home" width="50" height="30">
+        </a>
+        <a href="Documentation-help.html">Documentation</a>
+        <a href="la-maker.html">LA Maker</a>
+       
+    </nav>
+<!-- Header with the main title -->
+    <header>
+        <h1>Documentation Help </h1>
+    </header>
+ <!-- Main content section -->
+    <section>
+        <!-- Accordion buttons with panels for documentation topics -->
+        <button class="accordion">LEARNING AGREEMENT <span class="rotate">&#8250;</span></button>
+        <div class="panel">
+            <p>Learning Agreement is the document which defines your study plan. You need to agree it with your sending university and wait for the hosting university acceptance of it. The outcome may depend on courses availabilities and other factors such as courses clash or ETCS balancing. You should have about the same total credits between your courses and hosting university ones. You have the chance to change the learning agreement, during your studies, in that case you will fill the During the mobility or after mobility learning agreement.</p>
+            <img src="learning_agreement_image.jpg" alt="Learning Agreement Image">
+        </div>
+
+        <button class="accordion">TOR <span class="rotate">&#8250;</span></button>
+        <div class="panel">
+            <p> TOR (Transcript of Records) is the document you need in order to have credit conversion. It contains all the courses you attended and the possibile results</p>
+            <img src="tor_image.jpg" alt="TOR Image">
+        </div>
+
+        <button class="accordion">ARRIVAL AND DEPARTURE CERTIFICATES <span class="rotate">&#8250;</span></button>
+        <div class="panel">
+            <p>These documents certify your arrival at the university and your departure. Your sending institution may ask for them in order to provide any scolarship.</p>
+            <img src="arrival_departure_certificates_image.jpg" alt="Arrival and Departure Certificates Image">
+        </div>
+    </section>
+
+    <script>
+       
+        const accordions = document.querySelectorAll('.accordion');
+
+        accordions.forEach(accordion => {
+            accordion.addEventListener('click', function() {
+                this.classList.toggle('active');
+                this.querySelector('.rotate').classList.toggle('expanded');
+                const panel = this.nextElementSibling;
+
+                if (panel.style.display === 'block') {
+                    panel.style.display = 'none';
+                } else {
+                    panel.style.display = 'block';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

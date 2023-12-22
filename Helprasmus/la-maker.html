@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Course Comparison</title>
+    <style>
+        body {
+            background-color: #A5D9FD; /* Azzurro sfondo */
+            font-family:"San Francisco", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .table-container {
+            width: 45%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #333;
+            color: white;
+        }
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+        .ects-summary {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .ects-summary div {
+            font-weight: bold;
+        }
+        .input-form {
+    text-align: center;
+    margin: 20px;
+}
+
+.input-form input, .input-form button {
+    margin: 5px;
+    padding: 10px;
+}
+nav {
+            background-color: #216EB6; /* Colore sfondo menu */
+            text-align: start;
+            padding: 2px;
+        height: 40px;
+        }
+
+        nav a {
+            color: black; /* Colore testo menu */
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+            vertical-align:middle;
+            
+        }
+
+    </style>
+</head>
+<body>
+    <nav>
+        <!-- Navigation bar -->
+        <a href="about-us.html">About Us</a>
+        <a href="university-rating .html">University Rating</a>
+        <a href="index.html" class="home-button">
+            <img src="bottone_home_page-0001.png" alt="Home" width="50" height="30">
+        <a href="Documentation-help.html">Documentation</a>
+        <a href="la-maker.html">LA Maker</a>
+        <a href="FAQ.html">FAQ</a>
+      
+    </nav>
+     <!-- Input form for student details -->
+    <div class="input-form">
+        <input type="text" id="studentName" placeholder="Name">
+        <input type="text" id="studentSurname" placeholder="Surname">
+        <input type="text" id="studentId" placeholder="identification number">
+        <button onclick="printTable()">Print Table</button>
+    </div>
+    
+    <div class="container">
+        <div class="table-container">
+            <h2>Your courses</h2>
+            <table id="yourCourses">
+                <tr>
+                    <th>Select</th>
+                    <th>Courses</th>
+                    <th>ECTS</th>
+                </tr>
+                
+            </table>
+        </div>
+         <!-- Container for tables -->
+        <div class="table-container">
+                <!-- Your Courses table container -->
+            <h2>Courses Host University</h2>
+            <table id="hostCourses">
+                <tr>
+                    <th>Courses</th>
+                    <th>ECTS</th>
+                </tr>
+               <!-- Rows will be added by JavaScript -->
+            </table>
+        </div>
+    </div>
+    <!-- Host Courses table container -->
+    <div class="table-container" style="margin-top: 20px; width: 90%;">
+        <h2> Definitive Table</h2>
+        <table id="finalTable">
+            <tr>
+                <th>Your Course</th>
+                <th>Suggested Course </th>
+            </tr>
+            <!-- Rows will be added by JavaScript -->
+        </table>
+        <!-- ECTS summary section -->
+        <div class="ects-summary">
+            <div id="ectsLeft">Totale ECTS UNIVERSIT&Agrave; DI APPARTENENZA: 0 ECTS</div>
+            <div id="ectsRight">Totale ECTS UNIVERSIT&Agrave; OSPITANTE: 0 ECTS</div>
+        </div>
+    </div>
+<!-- JavaScript for course selection and printing functionality -->
+    <script>
+        // Course data for the student and host universities
+        var yourCourses = [
+            { name: "Programmazione 1", ects: 12 },
+            { name: "Tecnologie Web", ects: 6 },
+            { name: "Database", ects: 9 },
+            { name: "Programmazione 2", ects: 9},
+            { name: "Programmazione 3", ects: 6}
+           
+        ];
+
+        var hostCourses = [
+            { name: "Programming", ects: 6 },
+            { name: "Web Technologies", ects: 6 },
+            { name: "Database Concepts", ects: 6 },
+            { name: "Object Oriented Programming", ects: 6}
+           
+        ];
+
+        var selectedCourses = [];
+// Function to populate a table with courses
+        function populateTable(tableId, courses, isSelectable) {
+            var table = document.getElementById(tableId);
+            courses.forEach(function(course, index) {
+                var row = table.insertRow();
+                if (isSelectable) {
+                    var selectCell = row.insertCell(0);
+                    var selectBox = document.createElement('input');
+                    selectBox.type = 'checkbox';
+                    selectBox.id = 'select-' + index;
+                    selectBox.onchange = function() { selectCourse(course, this.checked); };
+                    selectCell.appendChild(selectBox);
+                }
+                var nameCell = row.insertCell(isSelectable ? 1 : 0);
+                var ectsCell = row.insertCell(isSelectable ? 2 : 1);
+                nameCell.innerHTML = course.name;
+                ectsCell.innerHTML = course.ects;
+            });
+        }
+
+        function selectCourse(course, isSelected) {
+            if (isSelected && selectedCourses.includes(course.name)) {
+                alert("Questa materia è già stata selezionata.");
+                return;
+            }
+
+            var finalTable = document.getElementById('finalTable');
+            if (isSelected) {
+                var suggestedCourse = findSuggestedCourse(course);
+                if (suggestedCourse) {
+                    if (Math.abs(course.ects - suggestedCourse.ects) > 3) {
+                        alert("The ECTS gap might be too wide to be accepted. Check that out");
+                    }
+                    var row = finalTable.insertRow();
+                    row.insertCell(0).innerHTML = course.name + " - " + course.ects + " ECTS";
+                    row.insertCell(1).innerHTML = suggestedCourse.name + " - " + suggestedCourse.ects + " ECTS";
+                    selectedCourses.push(course.name);
+                    selectedCourses.push(suggestedCourse.name);
+                } else {
+                    alert("Nessuna corrispondenza trovata per " + course.name);
+                }
+
+                updateTotalECTS();
+            } else {
+                // Gestione della deselezione del corso
+                selectedCourses = selectedCourses.filter(function(name) {
+                    return name !== course.name;
+                });
+                for (var i = 1; i < finalTable.rows.length; i++) {
+                    if (finalTable.rows[i].cells[0].innerHTML.startsWith(course.name)) {
+                        finalTable.deleteRow(i);
+                        break;
+                    }
+                }
+                updateTotalECTS();
+            }
+        }
+
+        function findSuggestedCourse(selectedCourse) {
+            var bestMatch = null;
+            var bestMatchScore = -1;
+
+            hostCourses.forEach(hostCourse => {
+                if (!selectedCourses.includes(hostCourse.name)) {
+                    var score = getStringSimilarity(selectedCourse.name, hostCourse.name);
+                    if (score > bestMatchScore) {
+                        bestMatchScore = score;
+                        bestMatch = hostCourse;
+                    }
+                }
+            });
+
+            return bestMatch;
+        }
+
+        function getStringSimilarity(str1, str2) {
+            var words1 = str1.toLowerCase().split(" ");
+            var words2 = str2.toLowerCase().split(" ");
+            var score = 0;
+
+            words1.forEach(word1 => {
+                words2.forEach(word2 => {
+                    if (word1 === word2) {
+                        score++;
+                    }
+                });
+            });
+
+            return score;
+        }
+
+        function updateTotalECTS() {
+            var totalLeft = 0, totalRight = 0;
+            var rows = document.getElementById('finalTable').rows;
+            for (var i = 1; i < rows.length; i++) {
+                totalLeft += parseInt(rows[i].cells[0].textContent.split(" - ")[1], 10);
+                if (rows[i].cells[1].textContent !== "Nessuna corrispondenza") {
+                    totalRight += parseInt(rows[i].cells[1].textContent.split(" - ")[1], 10);
+                }
+            }
+            document.getElementById('ectsLeft').innerHTML = "Sinistra: " + totalLeft + " ECTS";
+            document.getElementById('ectsRight').innerHTML = "Destra: " + totalRight + " ECTS";
+        }
+
+        populateTable("yourCourses", yourCourses, true);
+        populateTable("hostCourses", hostCourses, false);
+        
+        function printTable() {
+    var name = document.getElementById('studentName').value;
+    var surname = document.getElementById('studentSurname').value;
+    var studentId = document.getElementById('studentId').value;
+
+    if (!name || !surname || !studentId) {
+        alert("Per favore inserisci tutti i dati richiesti.");
+        return;
+    }
+
+    var printContents = document.querySelector('.container').innerHTML;
+    var ectsSummary = document.querySelector('.ects-summary').innerHTML; // Aggiunto per includere i riepiloghi ECTS
+    var originalContents = document.body.innerHTML;
+
+    // Aggiungi il riepilogo ECTS al contenuto della stampa
+    document.body.innerHTML = "<h3>Studente: " + name + " " + surname + " - Matricola: " + studentId + "</h3>" + printContents + "<div class='ects-summary'>" + ectsSummary + "</div>";
+    window.print();
+    document.body.innerHTML = originalContents;
+}
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation Help - Helprasmus</title>
+    <style>
+        /* CSS per body, header, nav, ecc. */
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #87CEEB;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            font-size: 18px;
+        }
+
+        section {
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        /* Stili per accordion e panel */
+        .accordion {
+            background-color: #87CEEB;
+            color: #333;
+            cursor: pointer;
+            padding: 18px;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 24px;
+            border-bottom: 2px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion:hover, .accordion.active {
+            background-color: #B0E0E6;
+        }
+
+        .accordion:after {
+            content: '\203A'; /* Freccia a destra */
+            font-size: 24px;
+            color: #333;
+            transition: transform 0.4s;
+            margin-left: 10px;
+        }
+
+        .accordion.active:after {
+            transform: rotate(90deg); /* Ruota la freccia */
+        }
+
+        .panel {
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            font-size: 18px;
+            padding: 0 18px;
+        }
+
+        /* Stili per la barra di ricerca */
+        #searchBox {
+            width: calc(100% - 40px);
+            padding: 10px 20px;
+            margin: 20px auto;
+            display: block;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Documentation Help - Helprasmus</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="university-rating.html">University Rating</a>
+        <a href="documentation-help.html">Documentation Help</a>
+    </nav>
+
+    <section>
+        <input type="text" id="searchBox" onkeyup="filterQuestions()" placeholder="Cerca nelle FAQ...">
+
+        <button class="accordion">LEARNING AGREEMENT</button>
+        <div class="panel">
+            <p>Qui la risposta alla domanda 1.</p>
+        </div>
+        <!-- Ripeti per altre domande... -->
+    </section>
+
+    <script>
+        // Seleziona tutti gli accordion
+        var accordions = document.querySelectorAll(".accordion");
+
+        // Aggiungi evento click a ciascun accordion
+        accordions.forEach(accordion => {
+            accordion.addEventListener("click", function() {
+                // Aggiungi/togli la classe "active"
+                this.classList.toggle("active");
+
+                // Seleziona il pannello associato
+                var panel = this.nextElementSibling;
+                
+                // Apri o chiudi il pannello
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        });
+
+        // Funzione di filtro per la barra di ricerca
+        function filterQuestions() {
+            var input = document.getElementById('searchBox');
+            var filter = input.value.toUpperCase();
+
+            // Loop attraverso tutti gli accordion e nascondi quelli che non corrispondono alla ricerca
+            accordions.forEach(accordion => {
+                var txtValue = accordion.textContent || accordion.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    accordion.style.display = "";
+                    // Apri il pannello se è già stato aperto prima
+                    if (accordion.classList.contains("active")) {
+                        accordion.nextElementSibling.style.maxHeight = accordion.nextElementSibling.scrollHeight + "px";
+                    }
+                } else {
+                    accordion.style.display = "none";
+                    accordion.nextElementSibling.style.maxHeight = null;
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
